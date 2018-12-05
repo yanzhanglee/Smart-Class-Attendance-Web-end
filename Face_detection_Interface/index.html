@@ -16,9 +16,10 @@
     <script src="resource/Js/tracking/data/face.js"></script>
 
     <script src="resource/Js/face-api/face-api.js"></script>
+    <script src="resource/Js/count-down.js"></script>
 
 </head>
-<body>
+<body onload="countDown()">
     <header>
         <div class="title-banner">
             <div class="row">
@@ -39,7 +40,9 @@
             <div>
                 <h4 class="class-detail">Class: 50.001 Introduction to Information System and Programming</h4>
                 <h4 class="class-detail">Class begins:
-                    <span>00:15:34</span>
+                    <span id="hour" style="font-weight: 600">00</span>
+                    <span id="min" style="font-weight: 600">15</span>
+                    <span id="sec" style="font-weight: 600">33</span>
                     later...
                 </h4>
             </div>
