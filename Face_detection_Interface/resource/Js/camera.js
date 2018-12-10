@@ -104,7 +104,7 @@ function startTakePhoto(){
         canvas.getContext('2d').drawImage(v, 0, 0);
         downloadPhoto();
       }
-    },3000);
+    },2500);
   }
 
 function downloadPhoto() {
@@ -203,7 +203,7 @@ function searchPhoto() {
   data.append('api_key',"T7080cfMH824XsoWzR0v4QPc288iTWBu");
   data.append('api_secret',"iWLN8jiciOCMWidOKfzIufBW11I4fjl0");
   data.append('image_file',imgFiles);
-  data.append('outer_id',"workingSet");
+  data.append('outer_id',"tuesdayDemo");
 
 
 
@@ -217,11 +217,11 @@ function searchPhoto() {
 
     success(data){
       console.log("Got Face++ Data");
-
       length = data.results.length;
 
       if (length != 0) {
         var confidence = data.results[0].confidence;
+        console.log("confidence: "+confidence);
         if (confidence >= 60) {
           callbackdata(data);
           var newid = data.results[0].user_id;
@@ -233,6 +233,11 @@ function searchPhoto() {
             }
           }
           if(repeat===0){
+            if(newid==="teacher1"){
+              alertTeacher(1);
+            }else if(newid==="teacher2"){
+              alertTeacher(2);
+            }
             id.push(newid);
             var p = document.getElementById("attendance-status");
             p.innerHTML = "Number of Students Attended: "+id.length;
@@ -271,7 +276,7 @@ function alertUnknownPerson() {
   var time = 2.5;
   var windowWidth  = $(window).width();
 
-  var tipsDiv = '<div class="tipsClass">' + '<div class="row tips-title"> Check In Failed! </div>' +'<div class="row" style="margin-bottom: 20px"><img src="resource/photo/fail.png"></div>'+ '</div>';
+  var tipsDiv = '<div class="tipsClass">' + '<div class="row tips-title"> Check In Failed! </div>' +'<div class="row" style="margin-bottom: 20px"><img alt="" src="resource/photo/fail.png"></div>'+ '</div>';
 
   $( 'body' ).append( tipsDiv );
   $( 'div.tipsClass' ).css({
@@ -312,15 +317,16 @@ function showTips(content, height, time ){
   //窗口的宽度
   var windowWidth  = $(window).width();
   var count = 0;
+  var tipsDiv;
 
   for(var i = 0;i<namelist.length;i++){
     if(content===namelist[i]){
-      var tipsDiv = '<div class="tipsClass">' + '<div class="row tips-title"> Check In Success! </div>' +'<div class="row"><img id="showImg" src="resource/photo/'+content+'.jpg"></div>'+'<div class="row" style="margin-bottom: 20px">'+content+'</div>'+ '</div>';
+      tipsDiv = '<div class="tipsClass">' + '<div class="row tips-title"> Check In Success! </div>' +'<div class="row"><img alt="" id="showImg" src="resource/photo/'+content+'.jpg"></div>'+'<div class="row" style="margin-bottom: 20px">'+content+'</div>'+ '</div>';
       count++;
     }
   }
   if(count===0){
-    var tipsDiv = '<div class="tipsClass">' + '<div class="row tips-title"> Check In Success! </div>' +'<div class="row"><img id="showImg" src="resource/photo/newvisitor.jpg"></div>'+'<div class="row" style="margin-bottom: 20px">NEW VISITOR</div>'+ '</div>';
+    tipsDiv = '<div class="tipsClass">' + '<div class="row tips-title"> Check In Success! </div>' +'<div class="row"><img alt="" id="showImg" src="resource/photo/newvisitor.jpg"></div>'+'<div class="row" style="margin-bottom: 20px">NEW VISITOR</div>'+ '</div>';
   }
 
   $( 'body' ).append( tipsDiv );
@@ -351,6 +357,47 @@ function showTips(content, height, time ){
     'height':'auto',
     'border-radius':'75px',
     'border':'4px solid #2F7DC0'
+  }).show();
+
+  setTimeout( function(){$( 'div.tipsClass' ).fadeOut();}, ( time * 1000 ) );
+}
+
+function alertTeacher(a) {
+  var height = 300;
+  var time = 2.5;
+  var windowWidth  = $(window).width();
+
+  if(a===1){
+    var tipsDiv = '<div class="tipsClass">' + '<div class="row tips-title">Welcome!</div>' +'<div class="row"><img id="showImg" src="resource/photo/Ngai-ManCheung.jpg"></div>'+'<div class="row" style="margin-bottom: 20px">Ngai-Man Cheung</div>'+ '</div>';
+  }else if(a===2){
+    var tipsDiv = '<div class="tipsClass">' + '<div class="row tips-title">Welcome!</div>' +'<div class="row"><img id="showImg" src="resource/photo/NormanLee.jpg"></div>'+'<div class="row" style="margin-bottom: 20px">Norman Lee</div>'+ '</div>';
+  }
+  $( 'body' ).append( tipsDiv );
+  $( 'div.tipsClass' ).css({
+    'top'       : height + 'px',
+    'left'      : ( windowWidth / 2 ) - 350/2 + 'px',
+    'position'  : 'absolute',
+    'padding'   : '3px 5px',
+    'background': '#E4F1FD',
+    'font-size' : 24 + 'px',
+    'margin'    : '10px 20px 20px 20px',
+    'text-align': 'center',
+    'width'     : '350px',
+    'height'    : 'auto',
+    'color'     : '#fff',
+    'opacity'   : '0.9',
+    'box-shadow':'0 2px 10px rgba(0, 0, 0, 0.3)'
+  }).show();
+  $('div.tips-title').css({
+    'margin-top':'20px',
+    'font-size':'150%',
+    'color':'red',
+    'font-weight':'700'
+  }).show();
+  $('img').css({
+    'margin':'20px auto 20px',
+    'width':'100px',
+    'height':'auto',
   }).show();
 
   setTimeout( function(){$( 'div.tipsClass' ).fadeOut();}, ( time * 1000 ) );

@@ -6,7 +6,7 @@ function countDown() {
   var endDate = new Date(str);
   var end = endDate.getTime();
   var leftTime = end - now;
-  console.log("time: " + endDate);
+  //console.log("time: " + endDate);
 //定义变量 d,h,m,s保存倒计时的时间
   var d, h, m, s;
   if (leftTime >= 0) {
