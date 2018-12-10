@@ -109,24 +109,9 @@ function startTakePhoto(){
 
 function downloadPhoto() {
 
-  // filename = new Date().toLocaleTimeString("en-US")+ namecount + '.' + type;
-  // var imgData = document.getElementById('canvas').toDataURL(type);
-  // imgData = imgData.replace(_fixType(type), 'image/octet-stream');
-
-  // var saveFile = function(data, filename) {
-  //   console.log("Downloading Photos!");
-  //   var save_link = document.createElementNS('http://www.w3.org/1999/xhtml', 'a');
-  //   save_link.href = imgData;
-  //   save_link.download = filename;
-
-  //   var event = document.createEvent('MouseEvents');
-  //   event.initMouseEvent('click', true, false, window, 0, 0, 0, 0, 0, false, false, false, false, 0, null);
-  //   save_link.dispatchEvent(event);
-  // };
   console.log(status);
   if(status==="true"){
     console.log(status);
-    // saveFile(imgData,filename);
     searchPhoto();
   }else{
     console.log("STOP.")
@@ -150,7 +135,6 @@ function callbackdata(data) {
   if (length != 0) {
 
     if (confidence >= 60) {
-
 
       var datasend = new FormData();
       datasend.append("name",id);
@@ -198,14 +182,11 @@ function searchPhoto() {
 
   var data = new FormData();
   var imgFiles = dataURItoBlob(document.getElementById('canvas').toDataURL(type));//.replace(_fixType(type), 'image/octet-stream');
-  console.log(typeof imgFiles);
   var url = "https://api-us.faceplusplus.com/facepp/v3/search";
-  data.append('api_key',"T7080cfMH824XsoWzR0v4QPc288iTWBu");
-  data.append('api_secret',"iWLN8jiciOCMWidOKfzIufBW11I4fjl0");
+  data.append('api_key',"lLmuNCeU8XzoRm3O1yBJ6qpwjhLFunFm");
+  data.append('api_secret',"UJ0NDCcZeOmWgkZuuFaK3HGITOEW1s_v");
   data.append('image_file',imgFiles);
   data.append('outer_id',"tuesdayDemo");
-
-
 
   $.ajax({
     url:url,
@@ -238,14 +219,16 @@ function searchPhoto() {
             }else if(newid==="teacher2"){
               alertTeacher(2);
             }
-            id.push(newid);
-            var p = document.getElementById("attendance-status");
-            p.innerHTML = "Number of Students Attended: "+id.length;
-            $(p).css({
-              'fontWeight':'600',
-            }).show();
-            console.log("numbers update: " +id.length);
-            alertPerson(newid);
+            else{
+              id.push(newid);
+              var p = document.getElementById("attendance-status");
+              p.innerHTML = "Number of Students Attended: "+id.length;
+              $(p).css({
+                'fontWeight':'600',
+              }).show();
+              console.log("numbers update: " +id.length);
+              alertPerson(newid);
+            }
           }
         }
         else {
@@ -254,7 +237,6 @@ function searchPhoto() {
       }
 
     },
-
     error:function() {
       alert("ERROR");
     }
